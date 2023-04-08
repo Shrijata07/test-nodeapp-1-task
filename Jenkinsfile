@@ -1,4 +1,3 @@
-#Jenkins file to build a dockerfile and publish the image to ECR Repository
 
 pipeline {
   agent {
