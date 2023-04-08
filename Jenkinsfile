@@ -1,3 +1,5 @@
+#Jenkins file to build a dockerfile and publish the image to ECR Repository
+
 pipeline {
   agent {
     label 'Application'
@@ -9,7 +11,6 @@ pipeline {
         checkout scm
       }
     }
-}
 
     stage('Build Docker Image') {
       parallel {
@@ -23,4 +24,21 @@ pipeline {
 
       }
     }
+}
+environment {
+    AWS_DEFAULT_REGION = 'us-east-1'
+  }
+  post {
+    always {
+      deleteDir()
+      sh 'sudo docker rmi 412064873312.dkr.ecr.us-east-1.amazonaws.com/course-assignment-c7:v${BUILD_NUMBER}'
+    }
+
+  }
+
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '10'))
+    disableConcurrentBuilds()
+    timeout(time: 1, unit: 'HOURS')
+  }
 }
