@@ -15,26 +15,26 @@ pipeline {
       parallel {
         stage('Build and Push Docker Image') {
           steps {
-            sh 'sudo docker build . -t 412064873312.dkr.ecr.us-east-1.amazonaws.com/course-assignment-c7:v${BUILD_NUMBER}'
-            sh 'sudo docker push 412064873312.dkr.ecr.us-east-1.amazonaws.com/course-assignment-c7:v${BUILD_NUMBER}'
-
+            sh '''
+            sudo docker build . -t 412064873312.dkr.ecr.us-east-1.amazonaws.com/course-assignment-c7:v${BUILD_NUMBER}
+            sudo docker push 412064873312.dkr.ecr.us-east-1.amazonaws.com/course-assignment-c7:v${BUILD_NUMBER}
+            '''
           }
         }
 
       }
     }
+    stage('Deploy in App host') {
+      steps {
+        script {
+          sh'''
+          sudo docker pull
+'''
 }
 environment {
     AWS_DEFAULT_REGION = 'us-east-1'
   }
-  post {
-    always {
-      deleteDir()
-      sh 'sudo docker rmi 412064873312.dkr.ecr.us-east-1.amazonaws.com/course-assignment-c7:v${BUILD_NUMBER}'
-    }
-
-  }
-
+ 
   options {
     buildDiscarder(logRotator(numToKeepStr: '10'))
     disableConcurrentBuilds()
