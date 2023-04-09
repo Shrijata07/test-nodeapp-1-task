@@ -25,7 +25,7 @@ pipeline {
       }
     }
 
-stage('Deploy in ECS') {
+stage('Deploy in app host') {
       steps {
         script {
           sh'''
